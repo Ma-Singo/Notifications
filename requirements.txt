@@ -1,0 +1,6 @@
+django
+django-allauth 
+django-celery
+celery
+python-decouple
+python-dotenv
