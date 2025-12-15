@@ -1,14 +1,13 @@
 name: 01 Setting up Project
 
-on: 
-    push:
+on:
     workflow_dispatch:
 
 jobs:
-    initialise:
+    backend:
         runs-on: ubuntu-latest
         steps:
-            name: Checkout Code 
-            uses: actions/checkout@v4
-            name: Setup Python
-            uses: actions/setup-python@3
+            - name: Checkout Code 
+              uses: actions/checkout@v4
+            - name: Setup Python
+              uses: actions/setup-python@3
