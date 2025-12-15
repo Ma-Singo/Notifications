@@ -10,9 +10,10 @@ jobs:
             - name: Checkout Code 
               uses: actions/checkout@v5
             - name: Setup Python
-              uses: actions/setup-python@6
+              uses: actions/setup-python@v6
             - name: Github events
               run: |
                 echo "triggered by ${{ github.event.name }}"
                 echo "Github actor: ${{ github.actor }}"
+
                 echo "Github SHA: ${{ github.sha }}"
