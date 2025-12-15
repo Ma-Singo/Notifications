@@ -8,6 +8,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Code 
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
             - name: Setup Python
-              uses: actions/setup-python@3
+              uses: actions/setup-python@6
+            - name: Github events
+              run: |
+                echo "triggered by ${{ github.event.name }}"
+                echo "Github actor: ${{ github.actor }}"
+                echo "Github SHA: ${{ github.sha }}"
