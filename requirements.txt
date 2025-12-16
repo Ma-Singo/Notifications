@@ -6,3 +6,5 @@ python-decouple
 python-dotenv
 gunicorn
 psycopg2
+requests
+jwt
