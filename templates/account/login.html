@@ -1,0 +1,25 @@
+{% extends "../base.html" %}
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+
+
+{% block content %}
+<h1>{% trans 'Sign in' %}</h1>
+        <p>
+            {% trans 'If you have not created an account yet, then please' %}
+            <a href="{% url 'account_signup' %}">{% trans 'Sign up' %}</a>
+            {% trans 'first' %}
+        </p>
+
+        <form action="{% url 'account_login' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">{% trans 'Sign In' %}</button>
+
+        </form>
+       
+    <p>
+        <a href="{% provider_login_url 'google' %}">{% trans 'Sign in with Google' %}</a>
+    </p>  
+{% endblock content %}
