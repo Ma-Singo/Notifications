@@ -134,8 +134,9 @@ STATIC_URL = 'static/'
 LOGIN_REDIRECT = "/"
 LOGOUT_REDIRECT = "/"
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+# MAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Allauth Configuration
 
@@ -158,7 +159,7 @@ SOCIALACCOUNT_PROVIDERS = {
                 'email'
             ],
         'AUTH_PARAMS': {
-                'access_type': 'online'
+                'prompt': 'select_account'
             }
     }
 }
