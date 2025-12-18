@@ -1,0 +1,11 @@
+django
+django-allauth 
+django-celery
+celery
+python-decouple
+python-dotenv
+gunicorn
+psycopg2
+requests
+PyJWT>=2.6,<3
+dj-database-url
