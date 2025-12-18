@@ -46,7 +46,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github'
+    'allauth.socialaccount.providers.github',
+
+
+    'accounts',
 
 
 ]
@@ -131,8 +134,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-LOGIN_REDIRECT = "/"
-LOGOUT_REDIRECT = "/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
@@ -159,7 +162,8 @@ SOCIALACCOUNT_PROVIDERS = {
                 'email'
             ],
         'AUTH_PARAMS': {
-                'prompt': 'select_account'
+                'prompt': 'select_account',
+                'access_type': 'online'
             }
     }
 }
@@ -172,6 +176,10 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_REAUTHENTICATION_REQUIRED = True
 ACCOUNT_EMAIL_NOTIFICATIONS = True
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+
+SOCIALACCOUNT_AUTO_SIGNUP = False
+
+SOCIALACCOUNT_ADAPTER = 'accounts.adapters.CustomSocialAccountAdapter'
 
 
 # Email Configuration
