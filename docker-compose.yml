@@ -1,0 +1,13 @@
+services:
+  web: 
+    build: .
+    depends_on:
+      - redis
+
+  celery:
+    build: .
+    command: celery -A config worker -l info
+    depends_on:
+      - redis
+  redis:
+    image: redis:7-alpine 
