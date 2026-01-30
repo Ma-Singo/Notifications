@@ -1,0 +1,2 @@
+# Notifications
+Fastapi notification service 
