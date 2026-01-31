@@ -8,10 +8,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 class Settings(BaseSettings):
     APP_NAME: str
     DEBUG: bool | None = False
-    DATABASE_URL: str
+    # DATABASE_URL: str
     SECRET_KEY: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
     ALGORITHM: str
+    STRIPE_API_KEY: str
+    SQLALCHEMY_DATABASE_URI: str
+    ASYNC_SQLALCHEMY_DATABASE_URI: str
 
 
     model_config = SettingsConfigDict(
@@ -27,5 +30,3 @@ def get_settings() -> Settings:
     Creates a cached instance of the settings class
     """
     return Settings()
-
-settings = Settings()
