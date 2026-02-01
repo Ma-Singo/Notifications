@@ -1,7 +1,8 @@
 # ==================
 # Builder stage
 # ==================
-
+# ARG TARGETPLATFORM
+# FROM --targetplatform=$TARGETPLATFORM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
 
 WORKDIR /app
@@ -22,6 +23,7 @@ RUN uv sync \
 # ==================
 
 FROM python:3.12-slim
+# FROM --targetplatform=$TARGETPLATFORM python:3.12-slim
 
 WORKDIR /app
 
