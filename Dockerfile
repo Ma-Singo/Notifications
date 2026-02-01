@@ -6,7 +6,8 @@ FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
 
 WORKDIR /app
 
-ENV UV_COMPILE_BYTECODE=1
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_VENV_IN_PROJECT=1
 
 COPY pyproject.toml uv.lock ./
 
@@ -31,7 +32,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 COPY --from=builder /app/.venv /app/.venv
 
-ENV PATH="/app/.venv/bin:$PATH"
+ENV PATH="/app/.venv/bin:${PATH}"
 
 COPY . .
 
