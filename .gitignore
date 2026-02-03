@@ -1,3 +1,10 @@
+# for now
+*.sqlite
+*.db
+
+# Working on a users using SOLID principle
+users/
+api/v0/
 
 .idea/
 

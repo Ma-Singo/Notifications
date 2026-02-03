@@ -1,32 +1,43 @@
-from fastapi import FastAPI, Depends, Request, HTTPException
-from fastapi.exceptions import ValidationException, RequestValidationError
+from fastapi import FastAPI, Request, status
+from fastapi.staticfiles import StaticFiles
+from fastapi.exceptions import RequestValidationError, ValidationException
 from fastapi.exception_handlers import http_exception_handler, request_validation_exception_handler
 from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from api.v1.routers import users
+from core.config import get_settings
+from shared.db.lifespan import lifespan
 
-from typing import Annotated
 
-from core.config import Settings, get_settings
+# FOR SYNCHRONOUS DATABASE
+# from sqlalchemy.orm import Session
+# from shared.db.base import Base
+# from shared.db.session import get_db, engine
+# Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+
+settings = get_settings()
+
+app = FastAPI(lifespan=lifespan)
+
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/media", StaticFiles(directory="media"), name="media")
 templates = Jinja2Templates(directory="templates")
 
 
-@app.get("/settings")
-def hello(settings: Annotated[Settings, Depends(get_settings)]):
-    return {"App Name": settings.APP_NAME}
+app.include_router(users.router, prefix="/api/users", tags=["users"])
 
-@app.get("/", include_in_schema=False)
-def home(request: Request):
-    return templates.TemplateResponse(
-        request,
-        "home.html",
-    )
+
+
+
+@app.get("/")
+def read_app_name():
+    return {
+            "APP_NAME": settings.APP_NAME,
+    }
+
+
 
 @app.exception_handler(StarletteHTTPException)
 def my_exception_handler(request: Request, exception: StarletteHTTPException):
@@ -44,7 +55,7 @@ def my_exception_handler(request: Request, exception: StarletteHTTPException):
         status_code=exception.status_code,
     )
 
-@app.exception_handler(RequestValidationError)
+@app.exception_handler(ValidationException)
 def validation_exception_handler(request: Request, exception: RequestValidationError):
     if request.url.path.startswith("/api/"):
         return request_validation_exception_handler(request, exception)
@@ -52,6 +63,8 @@ def validation_exception_handler(request: Request, exception: RequestValidationE
         request,
         "error.html",
         {
-            "exception": exception.errors(),
+            "exception": exception
         }
     )
+
+
