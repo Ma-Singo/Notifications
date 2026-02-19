@@ -3,6 +3,12 @@
 
 {% block content %}
 
-<h1>Hello World!</h1>
+{% if app_name %}
+
+<h1>{{ app_name }}</h1>
+{% else %}
+<p>Error</p>
+
+{% endif %}
 
 {% endblock content %}
